@@ -5,6 +5,23 @@ import seaborn as sns
 
 import re
 
+def country_distribution(df):
+    altered_df = df[df['Overall'] >= 8.0]
+    
+    country_counts = altered_df['Country of Origin'].value_counts().reset_index()
+    country_counts.columns = ['Country of Origin', 'Number of High Quality Coffee']
+    
+    plt.figure(figsize=(12, 8))
+    sns.barplot(x='Country of Origin', y='Number of High Quality Coffee', data=country_counts, palette='viridis')
+    
+    plt.title('High Quality Coffee Country Distribution', weight='bold')
+    plt.xlabel('Country of Origin')
+    plt.ylabel('Number of High Quality Coffee')
+    plt.xticks(rotation=45)
+    
+    plt.tight_layout()
+    plt.show()
+
 def bar_graph(df):
 
     bar_data = df.sort_values('Overall')[-5:]
@@ -82,5 +99,6 @@ def line_graph(df):
 
 if __name__ == '__main__':
     df = pd.read_csv('df_arabica_clean.csv')
-    bar_graph(df)
+    # bar_graph(df)
     # line_graph(df)
+    country_distribution(df)
